@@ -1,0 +1,22 @@
+<p-dropdown [options]="listOfCurrencies" [(ngModel)]="convertTo" (ngModelChange)="onChange(convertTo)"></p-dropdown>
+<a href="#" style="float: right;" class="material-icons" 
+(click)="retry()">
+refresh
+</a>
+<p-table #td [value]="currencies">
+  <ng-template pTemplate="header">
+      <tr>
+          <th *ngFor="let col of cols">
+              {{col.header}}
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-data>
+      <tr>
+          <td *ngFor="let col of cols">
+                  <span [innerHTML]='data[col.field]' 
+                  (click)="showDetails(data.name, data.id )"></span>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
