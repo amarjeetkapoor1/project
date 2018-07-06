@@ -65,6 +65,6 @@ export class HomeComponent implements OnInit, OnChanges {
 
   showDetails(name, id ) {
     console.log(name, id);
-    this.router.navigate(['/details', 'name'], { queryParams: { id: id } });
+    this.router.navigate(['/details', name]);
   }
 }

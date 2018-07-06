@@ -16,11 +16,12 @@ export class CurrencyDetailsComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.route.queryParams
+    this.route.params
       .subscribe(params => {
       // Defaults to 0 if no query param provided.
-      if(params['id'] !== undefined){
-        this.currency.getDetails(params['id']).subscribe(
+      console.log(params);
+      if (params['name'] !== undefined) {
+        this.currency.getDetails(params['name']).subscribe(
           currencyDetail => {
             this.currencyDetail = currencyDetail['data'] ;
           }

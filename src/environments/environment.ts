@@ -6,7 +6,8 @@
 
 export const environment = {
   production: false,
-  url: 'https://api.coinmarketcap.com/v2/ticker/'
+  url: 'https://api.coinmarketcap.com/v2/ticker/',
+  urlInit: 'https://api.coinmarketcap.com/v2/listings/'
 };
 
 /*

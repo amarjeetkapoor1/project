@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, ReplaySubject } from 'rxjs';
+import { map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -8,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CurrencyService {
 
+  listing: any;
   private currencies: any[];
   private updateSubject = new ReplaySubject<any[]>(1);
   get = this.updateSubject.asObservable();
@@ -47,12 +49,29 @@ export class CurrencyService {
       );
   }
 
-  getDetails(id: string) {
-    return this.http.get(environment.url + id + '/', {
+  getDetails(name: string) {
+    return this.http.get(environment.url + this.listing[name] + '/', {
       params: {
         convert: this.convertTo,
       }
     });
+  }
+
+
+
+  load(): Promise<any> {
+
+      this.listing = {};
+
+      return this.http.get(environment.urlInit).pipe(
+        map((res) => {
+        const data: any[] = res['data'];
+        data.forEach(entry => {
+            this.listing[entry['name']] = entry['id'];
+          });
+        })
+      ).toPromise().catch((err: any) => Promise.resolve());
+    }
   }
 
 }

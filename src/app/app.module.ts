@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,10 @@ const routes: Route[] = [
   {path: 'listOfMsg', component: ListOfMsgComponent}, */
 ];
 
+export function startupServiceFactory(currency: CurrencyService): Function {
+  return () => currency.load();
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +38,13 @@ const routes: Route[] = [
     RouterModule.forRoot(routes, {useHash: true}),
     TableModule
   ],
-  providers: [CurrencyService],
+  providers: [CurrencyService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: startupServiceFactory,
+      deps: [CurrencyService],
+      multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
