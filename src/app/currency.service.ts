@@ -50,6 +50,7 @@ export class CurrencyService {
   }
 
   getDetails(name: string) {
+
     return this.http.get(environment.url + this.listing[name] + '/', {
       params: {
         convert: this.convertTo,
@@ -57,23 +58,19 @@ export class CurrencyService {
     });
   }
 
-
-
   load(): Promise<any> {
 
-      this.listing = {};
+    this.listing = {};
 
-      return this.http.get(environment.urlInit).pipe(
-        map((res) => {
-        const data: any[] = res['data'];
-        data.forEach(entry => {
-            this.listing[entry['name']] = entry['id'];
-          });
-        })
-      ).toPromise().catch((err: any) => Promise.resolve());
-    }
+    return this.http.get(environment.urlInit).pipe(
+      map((res) => {
+      const data: any[] = res['data'];
+      data.forEach(entry => {
+          this.listing[entry['name']] = entry['id'];
+        });
+      })
+    ).toPromise().catch((err: any) => Promise.resolve());
   }
-
 }
 
 
