@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit, OnChanges {
 
@@ -25,8 +24,8 @@ export class HomeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.currency.get.subscribe(
-      (currencies: any[])   => {
-        if ( currencies.length > 0) {
+      (currencies: any[]) => {
+        if (currencies.length > 0) {
           this.currencies = currencies;
           this.td.reset();
           this.error = false;
@@ -48,13 +47,13 @@ export class HomeComponent implements OnInit, OnChanges {
 
     this.convertTo = this.currency.getConvertTo();
     this.listOfCurrencies = [
-      {label: 'INR', value: 'INR'},
-      {label: 'USD', value: 'USD'},
-      {label: 'EUR', value: 'EUR'}
+      { label: 'INR', value: 'INR' },
+      { label: 'USD', value: 'USD' },
+      { label: 'EUR', value: 'EUR' }
     ];
     this.cols = [
       { field: 'rank', header: '#' },
-      { field: 'id', header: 'id'},
+      { field: 'id', header: 'id' },
       { field: 'name', header: 'Name' },
       { field: 'market_cap', header: 'Market Cap' },
       { field: 'circulating_supply', header: 'Circulating Supply' }

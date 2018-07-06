@@ -1,40 +1,39 @@
-<div  class='alert' [ngClass]="{'alert-success': !this.error, 'alert-warning': this.error }">
+<div class='alert' [ngClass]="{'alert-success': !this.error, 'alert-warning': this.error }">
   {{msg}}
 </div>
-<div *ngIf = "!this.error" >
-  <p-dropdown [options]="listOfCurrencies" [(ngModel)]="convertTo" (ngModelChange)="onChange(convertTo)"></p-dropdown>
-<a href="#" style="float: right;" class="material-icons" 
-(click)="retry()">
-refresh
+<a href="#" style="float: right;" class="material-icons" (click)="retry()">
+  refresh
 </a>
-<p-table #td [value]="currencies" >
-  <ng-template pTemplate="header">
+<div *ngIf="!this.error">
+  <p-dropdown [options]="listOfCurrencies" [(ngModel)]="convertTo" (ngModelChange)="onChange(convertTo)"></p-dropdown>
+
+  <p-table #td [value]="currencies">
+    <ng-template pTemplate="header">
       <tr style="word-wrap: break-word;">
-          <th *ngFor="let col of cols">
-              {{col.header}}
-          </th>
-          <th>
-            Notes
-          </th>
-          <th>
-            Price
-          </th>
+        <th *ngFor="let col of cols">
+          {{col.header}}
+        </th>
+        <th>
+          Notes
+        </th>
+        <th>
+          Price
+        </th>
       </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-data>
-      <tr style="word-wrap: break-word; cursor: pointer" >
-          <td *ngFor="let col of cols">
-                  <span [innerHTML]='data[col.field]' 
-                  (click)="showDetails(data.name, data.notes)"></span>
-          </td>
-          <td>
-            <span> {{ data.price | currency : convertTo }}</span>
-          </td>
-          <td>
-            <input style="width: 100%" [(ngModel)]="data.notes">
-          </td>
+    </ng-template>
+    <ng-template pTemplate="body" let-data>
+      <tr style="word-wrap: break-word; cursor: pointer">
+        <td *ngFor="let col of cols">
+          <span [innerHTML]='data[col.field]' (click)="showDetails(data.name, data.notes)"></span>
+        </td>
+        <td>
+          <span> {{ data.price | currency : convertTo }}</span>
+        </td>
+        <td>
+          <input style="width: 100%" [(ngModel)]="data.notes">
+        </td>
       </tr>
-  </ng-template>
-</p-table>
+    </ng-template>
+  </p-table>
 
 </div>
