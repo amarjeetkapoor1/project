@@ -14,6 +14,7 @@ export class CurrencyService {
   private updateSubject = new ReplaySubject<any[]>(1);
   get = this.updateSubject.asObservable();
   convertTo = 'INR';
+  detailNotes = '';
 
   constructor(private http: HttpClient) {
     this.currencies = [];
@@ -38,7 +39,8 @@ export class CurrencyService {
               market_cap: data.quotes[this.convertTo].market_cap,
               price: data.quotes[this.convertTo].price,
               circulating_supply: data.circulating_supply,
-              id: data.id
+              id: data.id,
+              notes: ''
             };
           });
           this.updateSubject.next(this.currencies);
@@ -82,4 +84,5 @@ export interface Currency {
   price: string;
   circulating_supply: string;
   id: string;
+  notes: string;
 }

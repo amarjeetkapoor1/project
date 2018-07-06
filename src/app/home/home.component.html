@@ -9,13 +9,19 @@ refresh
           <th *ngFor="let col of cols">
               {{col.header}}
           </th>
+          <th>
+            Notes
+          </th>
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-data>
       <tr>
           <td *ngFor="let col of cols">
                   <span [innerHTML]='data[col.field]' 
-                  (click)="showDetails(data.name, data.id )"></span>
+                  (click)="showDetails(data.name, data.notes)"></span>
+          </td>
+          <td>
+            <input [(ngModel)]="data.notes">
           </td>
       </tr>
   </ng-template>

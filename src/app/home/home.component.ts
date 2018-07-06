@@ -63,8 +63,8 @@ export class HomeComponent implements OnInit, OnChanges {
     this.currency.update();
   }
 
-  showDetails(name, id ) {
-    console.log(name, id);
+  showDetails(name, notes) {
+    this.currency.detailNotes= notes;
     this.router.navigate(['/details', name]);
   }
 }
