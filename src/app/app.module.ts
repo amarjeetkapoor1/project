@@ -14,7 +14,8 @@ import { CurrencyDetailsComponent } from './currency-details/currency-details.co
 
 const routes: Route[] = [
   {path: '', component: HomeComponent},
-  {path: 'details/:name', component: CurrencyDetailsComponent}
+  {path: 'details/:name', component: CurrencyDetailsComponent},
+  {path: '**', redirectTo: '' }
 ];
 
 export function startupServiceFactory(currency: CurrencyService): Function {
