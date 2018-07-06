@@ -3,6 +3,7 @@ import { CurrencyService } from '../currency.service';
 import { SelectItem } from 'primeng/components/common/selectitem';
 import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
+import { PROGRESS, ERRORMSG, SUCCESSMSG } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit, OnChanges {
   @ViewChild('td') td: Table;
   convertTo: string;
   cols: { field: string; header: string; }[];
-  msg = 'Loading Data';
+  msg = PROGRESS;
   currencies: any[];
   listOfCurrencies: SelectItem[];
   constructor(private currency: CurrencyService,
@@ -29,19 +30,19 @@ export class HomeComponent implements OnInit, OnChanges {
           this.currencies = currencies;
           this.td.reset();
           this.error = false;
-          this.msg = 'Data loaded';
+          this.msg = SUCCESSMSG;
         } else {
           this.error = true;
-          this.msg = 'Could not load Data. Want to retry';
+          this.msg = ERRORMSG;
         }
       },
       err => {
         this.error = true;
-        this.msg = 'Could not load Data. Want to retry';
+        this.msg = ERRORMSG;
       },
       () => {
         this.error = false;
-        this.msg = 'Data loaded';
+        this.msg = SUCCESSMSG;
       }
     );
 
@@ -64,8 +65,8 @@ export class HomeComponent implements OnInit, OnChanges {
     console.log(changes);
   }
 
-  onChange(event) {
-    this.currency.convertTo = event;
+  onChange(convertTo) {
+    this.currency.setConvertTo(convertTo);
     this.currency.update();
   }
 
@@ -74,7 +75,7 @@ export class HomeComponent implements OnInit, OnChanges {
   }
 
   showDetails(name, notes) {
-    this.currency.detailNotes = notes;
+    this.currency.setDetailNotes(notes);
     this.router.navigate(['/details', name]);
   }
 }

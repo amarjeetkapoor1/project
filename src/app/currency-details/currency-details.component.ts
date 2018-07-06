@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from 'src/app/currency.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ERRORMSG, SUCCESSMSG, PROGRESS } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-currency-details',
@@ -11,27 +12,29 @@ export class CurrencyDetailsComponent implements OnInit {
   error: boolean;
   msg: string;
   currencyDetail: any;
+
   constructor(private currency: CurrencyService,
     private route: ActivatedRoute,
     private router: Router) {
-
+      this.msg = PROGRESS;
   }
 
   ngOnInit() {
     this.route.params
       .subscribe(params => {
-        // Defaults to 0 if no query param provided.
+
         console.log(params);
         if (params['name'] !== undefined) {
           this.currency.getDetails(params['name']).subscribe(
             currencyDetail => {
               this.currencyDetail = currencyDetail['data'];
               this.error = false;
-              this.msg = 'Data loaded';
+              this.msg = SUCCESSMSG;
             },
             err => {
               this.error = true;
-              this.msg = 'Could not load Data. Want to retry';
+              this.msg = ERRORMSG;
+              this.currencyDetail = ERRORMSG;
             }
 
           );
@@ -41,7 +44,7 @@ export class CurrencyDetailsComponent implements OnInit {
       },
         err => {
           this.error = true;
-          this.msg = 'Could not load Data. Want to retry';
+          this.msg = ERRORMSG;
         }
       );
   }

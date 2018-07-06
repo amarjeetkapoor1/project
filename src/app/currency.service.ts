@@ -9,12 +9,12 @@ import { environment } from 'src/environments/environment';
 })
 export class CurrencyService {
 
-  listing: any;
-  private currencies: any[];
   private updateSubject = new ReplaySubject<any[]>(1);
-  get = this.updateSubject.asObservable();
-  convertTo = 'INR';
-  detailNotes = '';
+  public get = this.updateSubject.asObservable();
+  private listing: any;
+  private currencies: any[];
+  private convertTo = 'INR';
+  private detailNotes = '';
 
   constructor(private http: HttpClient) {
     this.currencies = [];
@@ -63,6 +63,19 @@ export class CurrencyService {
   getConvertTo() {
     return this.convertTo;
   }
+
+  setConvertTo(convertTo) {
+    this.convertTo = convertTo;
+  }
+
+  setDetailNotes(detailNotes) {
+    this.detailNotes = detailNotes;
+  }
+
+  getDetailNotes() {
+    return this.detailNotes;
+  }
+
   load(): Promise<any> {
 
     this.listing = {};
