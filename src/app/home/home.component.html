@@ -7,7 +7,7 @@
 <div *ngIf="!this.error">
   <p-dropdown [options]="listOfCurrencies" [(ngModel)]="convertTo" (ngModelChange)="onChange(convertTo)"></p-dropdown>
 
-  <p-table #td [value]="currencies">
+  <p-table #td [value]="currencies" [responsive]="true">
     <ng-template pTemplate="header">
       <tr style="word-wrap: break-word;">
         <th *ngFor="let col of cols">
