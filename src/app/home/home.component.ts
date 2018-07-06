@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, OnChanges {
   @ViewChild('td') td: Table;
   convertTo: string;
   cols: { field: string; header: string; }[];
-  msg: string ='Loading Data';
+  msg = 'Loading Data';
   currencies: any[];
   listOfCurrencies: SelectItem[];
   constructor(private currency: CurrencyService,
@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit, OnChanges {
           this.error = true;
           this.msg = 'Could not load Data. Want to retry';
         }
-
       },
       err => {
         this.error = true;
