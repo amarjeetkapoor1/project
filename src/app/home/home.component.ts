@@ -11,10 +11,11 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnChanges {
 
+  error: boolean;
   @ViewChild('td') td: Table;
   convertTo: string;
   cols: { field: string; header: string; }[];
-  errorMsg: string;
+  msg: string ='Loading Data';
   currencies: any[];
   listOfCurrencies: SelectItem[];
   constructor(private currency: CurrencyService,
@@ -28,13 +29,25 @@ export class HomeComponent implements OnInit, OnChanges {
         if ( currencies.length > 0) {
           this.currencies = currencies;
           this.td.reset();
+          this.error = false;
+          this.msg = 'Data loaded';
         } else {
-          this.errorMsg = 'Could not load Data. Want to retry';
+          this.error = true;
+          this.msg = 'Could not load Data. Want to retry';
         }
+
+      },
+      err => {
+        this.error = true;
+        this.msg = 'Could not load Data. Want to retry';
+      },
+      () => {
+        this.error = false;
+        this.msg = 'Data loaded';
       }
     );
 
-    this.convertTo = this.currency.convertTo;
+    this.convertTo = this.currency.getConvertTo();
     this.listOfCurrencies = [
       {label: 'INR', value: 'INR'},
       {label: 'USD', value: 'USD'},
@@ -44,7 +57,6 @@ export class HomeComponent implements OnInit, OnChanges {
       { field: 'rank', header: '#' },
       { field: 'id', header: 'id'},
       { field: 'name', header: 'Name' },
-      { field: 'price', header: 'Price' },
       { field: 'market_cap', header: 'Market Cap' },
       { field: 'circulating_supply', header: 'Circulating Supply' }
     ];
@@ -64,7 +76,7 @@ export class HomeComponent implements OnInit, OnChanges {
   }
 
   showDetails(name, notes) {
-    this.currency.detailNotes= notes;
+    this.currency.detailNotes = notes;
     this.router.navigate(['/details', name]);
   }
 }

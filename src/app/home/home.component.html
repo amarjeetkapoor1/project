@@ -1,9 +1,13 @@
+<div  class='alert' [ngClass]="{'alert-success': !this.error, 'alert-warning': this.error }">
+  {{msg}}
+</div>
+
 <p-dropdown [options]="listOfCurrencies" [(ngModel)]="convertTo" (ngModelChange)="onChange(convertTo)"></p-dropdown>
 <a href="#" style="float: right;" class="material-icons" 
 (click)="retry()">
 refresh
 </a>
-<p-table #td [value]="currencies">
+<p-table #td [value]="currencies" >
   <ng-template pTemplate="header">
       <tr>
           <th *ngFor="let col of cols">
@@ -12,16 +16,22 @@ refresh
           <th>
             Notes
           </th>
+          <th>
+            Price
+          </th>
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-data>
-      <tr>
+      <tr style="word-wrap: break-word" >
           <td *ngFor="let col of cols">
                   <span [innerHTML]='data[col.field]' 
                   (click)="showDetails(data.name, data.notes)"></span>
           </td>
           <td>
-            <input [(ngModel)]="data.notes">
+            <span> {{ data.price | currency : convertTo }}</span>
+          </td>
+          <td>
+            <input style="width: 100%" [(ngModel)]="data.notes">
           </td>
       </tr>
   </ng-template>

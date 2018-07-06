@@ -60,6 +60,9 @@ export class CurrencyService {
     });
   }
 
+  getConvertTo() {
+    return this.convertTo;
+  }
   load(): Promise<any> {
 
     this.listing = {};
