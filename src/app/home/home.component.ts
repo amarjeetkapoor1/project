@@ -52,13 +52,10 @@ export class HomeComponent implements OnInit, OnChanges {
     ];
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
-
   onChange(convertTo) {
     this.currency.setConvertTo(convertTo);
     this.currency.update();
+    this.currencies = undefined;
   }
 
   retry() {
