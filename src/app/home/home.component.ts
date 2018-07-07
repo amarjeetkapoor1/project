@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, OnChanges {
   error: boolean;
   @ViewChild('td') td: Table;
   convertTo: string;
-  cols: { field: string; header: string; }[];
+  cols: { field: string; header: string; width: string }[];
   msg: string;
   currencies: any[];
   listOfCurrencies: SelectItem[];
@@ -45,11 +45,10 @@ export class HomeComponent implements OnInit, OnChanges {
       { label: 'EUR', value: 'EUR' }
     ];
     this.cols = [
-      { field: 'rank', header: '#' },
-      { field: 'id', header: 'id' },
-      { field: 'name', header: 'Name' },
-      { field: 'market_cap', header: 'Market Cap' },
-      { field: 'circulating_supply', header: 'Circulating Supply' }
+      { field: 'rank', header: '#', width: '5%' },
+      { field: 'id', header: 'id', width : '7%' },
+      { field: 'name', header: 'Name', width : '10%'},
+      { field: 'circulating_supply', header: 'Circulating Supply', width : '15%'}
     ];
   }
 

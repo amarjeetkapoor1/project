@@ -9,10 +9,13 @@
   <p-table #td [value]="currencies" [responsive]="true">
     <ng-template pTemplate="header">
       <tr style="word-wrap: break-word;">
-        <th *ngFor="let col of cols">
+        <th [width]="col.width" *ngFor="let col of cols">
           {{col.header}}
         </th>
-        <th>
+        <th width="20%">
+          Market Cap
+        </th>
+        <th width="10%" >
           Price
         </th>
         <th>
@@ -24,6 +27,9 @@
       <tr style="word-wrap: break-word; cursor: pointer">
         <td *ngFor="let col of cols">
           <span [innerHTML]='data[col.field]' (click)="showDetails(data.name, data.notes)"></span>
+        </td>
+        <td>
+          <span> {{ data.market_cap | currency : convertTo }}</span>
         </td>
         <td>
           <span> {{ data.price | currency : convertTo }}</span>
