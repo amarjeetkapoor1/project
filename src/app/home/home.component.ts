@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit, OnChanges {
           this.error = false;
           this.msg = SUCCESSMSG;
         } else {
-          this.error = true;
-          this.msg = currencies.error;
+          this.msg = ERRORMSG;
+          this.error = this.currencies ? false : true;
         }
       }
     );
