@@ -1,5 +1,4 @@
-<div class='alert' [ngClass]="{'alert-success': !this.error, 'alert-warning': this.error }">
-  {{msg}}
+<div class='alert' [ngClass]="{'alert-success': !this.error, 'alert-warning': this.error }" [innerHTML]="msg">
 </div>
 <a href="#" style="float: right;" class="material-icons" (click)="retry()">
   refresh
@@ -14,10 +13,10 @@
           {{col.header}}
         </th>
         <th>
-          Notes
+          Price
         </th>
         <th>
-          Price
+          Notes
         </th>
       </tr>
     </ng-template>
@@ -30,7 +29,7 @@
           <span> {{ data.price | currency : convertTo }}</span>
         </td>
         <td>
-          <input style="width: 100%" [(ngModel)]="data.notes">
+          <input style="width: 100%" [(ngModel)]="currency.listing[data.name]['notes']">
         </td>
       </tr>
     </ng-template>

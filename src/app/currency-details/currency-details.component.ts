@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from 'src/app/currency.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ERRORMSG, SUCCESSMSG, PROGRESS } from 'src/app/app.constants';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-currency-details',
@@ -12,6 +13,7 @@ export class CurrencyDetailsComponent implements OnInit {
   error: boolean;
   msg: string;
   currencyDetail: any;
+  notes: string;
 
   constructor(private currency: CurrencyService,
     private route: ActivatedRoute,
@@ -22,19 +24,17 @@ export class CurrencyDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .subscribe(params => {
-
-        console.log(params);
         if (params['name'] !== undefined) {
           this.currency.getDetails(params['name']).subscribe(
             currencyDetail => {
               this.currencyDetail = currencyDetail['data'];
+              this.notes = this.currency.listing[params['name']]['notes'];
               this.error = false;
               this.msg = SUCCESSMSG;
             },
             err => {
               this.error = true;
-              this.msg = ERRORMSG;
-              this.currencyDetail = ERRORMSG;
+              this.msg = err;
             }
 
           );

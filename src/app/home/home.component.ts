@@ -15,34 +15,26 @@ export class HomeComponent implements OnInit, OnChanges {
   @ViewChild('td') td: Table;
   convertTo: string;
   cols: { field: string; header: string; }[];
-  msg = PROGRESS;
+  msg: string;
   currencies: any[];
   listOfCurrencies: SelectItem[];
+
   constructor(private currency: CurrencyService,
     private router: Router) {
-
+      this.msg = PROGRESS;
   }
 
   ngOnInit() {
     this.currency.get.subscribe(
-      (currencies: any[]) => {
-        if (currencies.length > 0) {
+      (currencies: any) => {
+        if (currencies.error === undefined) {
           this.currencies = currencies;
-          this.td.reset();
           this.error = false;
           this.msg = SUCCESSMSG;
         } else {
           this.error = true;
-          this.msg = ERRORMSG;
+          this.msg = currencies.error;
         }
-      },
-      err => {
-        this.error = true;
-        this.msg = ERRORMSG;
-      },
-      () => {
-        this.error = false;
-        this.msg = SUCCESSMSG;
       }
     );
 
@@ -71,6 +63,8 @@ export class HomeComponent implements OnInit, OnChanges {
   }
 
   retry() {
+    this.error = false;
+    this.msg = PROGRESS;
     this.currency.update();
   }
 
