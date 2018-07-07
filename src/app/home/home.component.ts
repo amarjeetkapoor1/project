@@ -1,7 +1,6 @@
-import { Component, OnInit, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
-import { CurrencyService } from '../currency.service';
+import { Component, OnInit} from '@angular/core';
+import { CurrencyService, Currency } from '../currency.service';
 import { SelectItem } from 'primeng/components/common/selectitem';
-import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
 import { PROGRESS, ERRORMSG, SUCCESSMSG } from 'src/app/app.constants';
 
@@ -9,14 +8,13 @@ import { PROGRESS, ERRORMSG, SUCCESSMSG } from 'src/app/app.constants';
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit, OnChanges {
+export class HomeComponent implements OnInit {
 
   error: boolean;
-  @ViewChild('td') td: Table;
   convertTo: string;
   cols: { field: string; header: string; width: string }[];
   msg: string;
-  currencies: any[];
+  currencies: Currency[];
   listOfCurrencies: SelectItem[];
 
   constructor(private currency: CurrencyService,
@@ -26,8 +24,8 @@ export class HomeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.currency.get.subscribe(
-      (currencies: any) => {
-        if (currencies.error === undefined) {
+      (currencies: Currency[]) => {
+        if (currencies.length > 0) {
           this.currencies = currencies;
           this.error = false;
           this.msg = SUCCESSMSG;
@@ -55,7 +53,7 @@ export class HomeComponent implements OnInit, OnChanges {
   onChange(convertTo) {
     this.currency.setConvertTo(convertTo);
     this.currency.update();
-    this.currencies = undefined;
+    this.currencies = null;
   }
 
   retry() {
@@ -64,8 +62,7 @@ export class HomeComponent implements OnInit, OnChanges {
     this.currency.update();
   }
 
-  showDetails(name, notes) {
-    this.currency.setDetailNotes(notes);
+  showDetails(name) {
     this.router.navigate(['/details', name]);
   }
 }

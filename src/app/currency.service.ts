@@ -13,12 +13,9 @@ export class CurrencyService {
   private updateSubject = new ReplaySubject<any>(1);
   public get = this.updateSubject.asObservable();
   listing: any;
-  private currencies: any[];
   private convertTo = 'INR';
-  private detailNotes = '';
 
   constructor(private http: HttpClient) {
-    this.currencies = [];
     this.update();
   }
 
@@ -34,7 +31,7 @@ export class CurrencyService {
     }).subscribe(
       (req: any) => {
         if (req.data instanceof Array) {
-          this.currencies = req.data.map(data => {
+          const currencies = req.data.map(data => {
             return {
               name: data.name,
               rank: data.rank,
@@ -44,14 +41,14 @@ export class CurrencyService {
               id: data.id
             };
           });
+          this.updateSubject.next(currencies);
         }
         if (req.metadata.error !== null) {
-          this.updateSubject.next({error: req.metadata.error});
+          this.updateSubject.next([]);
         }
-        this.updateSubject.next(this.currencies);
       },
       err => {
-        this.updateSubject.next({error: err});
+        this.updateSubject.next([]);
       }
     );
   }
@@ -79,16 +76,8 @@ export class CurrencyService {
     this.convertTo = convertTo;
   }
 
-  setDetailNotes(detailNotes) {
-    this.detailNotes = detailNotes;
-  }
-
-  getDetailNotes() {
-    return this.detailNotes;
-  }
 
   load(): Promise<any> {
-
     this.listing = {};
     return this.http.get(environment.urlInit).pipe(
       map((res) => {
@@ -109,5 +98,4 @@ export interface Currency {
   price: string;
   circulating_supply: string;
   id: string;
-  notes: string;
 }

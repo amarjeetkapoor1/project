@@ -25,13 +25,13 @@
     </ng-template>
     <ng-template pTemplate="body" let-data>
       <tr style="word-wrap: break-word; cursor: pointer">
-        <td *ngFor="let col of cols">
-          <span [innerHTML]='data[col.field]' (click)="showDetails(data.name, data.notes)"></span>
+        <td *ngFor="let col of cols" (click)="showDetails(data.name)">
+          <span [innerHTML]='data[col.field]' ></span>
         </td>
-        <td>
+        <td (click)="showDetails(data.name)">
           <span> {{ data.market_cap | currency : convertTo }}</span>
         </td>
-        <td>
+        <td (click)="showDetails(data.name)">
           <span> {{ data.price | currency : convertTo }}</span>
         </td>
         <td>

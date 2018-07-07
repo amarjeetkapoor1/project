@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from 'src/app/currency.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ERRORMSG, SUCCESSMSG, PROGRESS } from 'src/app/app.constants';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-currency-details',
@@ -43,8 +42,7 @@ export class CurrencyDetailsComponent implements OnInit {
         }
       },
         err => {
-          this.error = true;
-          this.msg = ERRORMSG;
+          this.back();
         }
       );
   }
